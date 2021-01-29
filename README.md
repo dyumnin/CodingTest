@@ -12,7 +12,9 @@ Take home coding test.
 **Assumption** 
 1. The candidate know's verilog/VHDL, Algorithms, Verification(UVM,VUnit,CocoTB etc.), Digital logic and has worked with FPGA's
 
-** Problem Statement**
+**Problem Statement**
+
+![SystemDiagram](codingtest.png)
 
 1. We have are building a system which on one end communicates with a server via UART, and on the other is connected to an I2C based peripheral.
 2. The Server API defines two functions `write(unsigned address,unsigned data);` and `read(unsigned address);` which will be used to access different address spaces in the I2C peripheral.
