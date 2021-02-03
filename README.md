@@ -3,9 +3,9 @@
 An Engineer working in core electronics is expected to be familar with 
 
 1. Writing, testing and debugging 
-    1.1. Firmware
-    1.2. RTL Code
-    1.3. Testcases
+   * Firmware
+   * RTL Code
+   * Testcases
 2. Commiting code to Version control system.
 
 In most cases the academic coursework teaches less than 10% of these skills, Self learning is an important aspect in a Research and Design oriented Job Role.
