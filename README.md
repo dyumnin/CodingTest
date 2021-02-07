@@ -1,14 +1,16 @@
 # CodingTest
 
-An Engineer working in core electronics is expected to be familar with 
+Skill set necessary for a role in Chip Design Engineering are:
 
+1. **Self learning** Each day you will be working on something new, You should have the ability to conduct a literature survey (aka google search) and fill the gaps in your understanding. This includes,regularly learning new languages and frameworks, Reading and understanding Standards's, Existing code, Papers etc.
+2. **Coding**
 1. Writing, testing and debugging 
    * Firmware
    * RTL Code
    * Testcases
-2. Commiting code to Version control system.
+2. **Effectively using Version Coontrol system**
 
-In most cases the academic coursework teaches less than 10% of these skills, Self learning is an important aspect in a Research and Design oriented Job Role.
+In most cases the academic coursework teaches less than 10% of these skills, Self learning is an important aspect in a Research and Design oriented Job Role as everyday you work on "something out of syllabus"
 
 If you can complete the steps listed below, We will be interested in discussing a career at Dyumnin Semiconductors with you.
 
@@ -61,5 +63,6 @@ Create a pull request on the original repo with your code submission.
 
 Once the pull request is created we will schedule the next round of interview.
 
+## Use the Issue tracker.
 
-In case of any issues, raise an issue in the github issue tracking system for this repo..
+If you need any clarity on the steps above, raise a ticket on the issue tracker.
