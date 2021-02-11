@@ -1,0 +1,109 @@
+//receiving input from UART
+module UART_rx (Clk,Rst_n,RxEn,Rx,Tick,RxDone,RxData,Tick,NBits);
+input Clk,Rst_n,RxEn,Rx,Tick;
+input [3:0]NBits ;
+output RxDone;
+output [7:0]RxData;
+
+//define some variables which can be used for state machine
+parameter IDLE=1'b0, READ= 1'b1;     //we have two states for the state machine i.e. 0 and 1(IDLE and READ)
+reg [1:0] State,Next;                //creating some registers for the states
+reg read_enable=1'b0;                //to enable the data in READ
+reg start_bit=1'b1;                  //to notify the detection of start bit
+reg RxDone=1'b0;                     //variable to notify when the data read process is done
+reg [4:0]Bit =5'b00000;              //variabe used for the bit by bit read loop
+reg [3:0] counter =4'b0000;          //counter variable to count the tick pulses
+reg [7:0] Read_data= 8'b00000000;    
+reg [7:0] RxData;
+
+//state machine
+//reset
+
+always @ (posedge Clk or negedge Rst_n)
+begin
+if(!Rst_n)  
+   State <=IDLE;
+else
+   State <=Next;
+end
+
+//Decision
+//Each time "State or Rx or RxEn or RDone" will change their values , we decide the next step
+
+always @ (State or Rx or RxEn or RxDone)
+begin
+   case(State)
+      IDLE: if(!Rx &RxEn)    Next=READ;   //if Rx is low (start bit detected) we start Read
+            else             Next=IDLE;   
+      READ: if(RxDone)       Next=IDLE;   //if RxDone is high, then we get back to IDLE
+            else             Next=READ;
+      default
+   endcase
+end
+
+//enable or disable READ
+ always @(State or RxDone)
+ begin
+    case (State)
+       READ: begin
+                read_enable<=1'b1;        //if we are in the Read state,we enable the read_enable
+             end
+       IDLE: begin
+                read_enable<=1'b0;        //if we get back to IDLE, we disable the read_enable
+             end
+     endcase
+end     
+
+//read the input data
+
+always @ (posedge Tick)
+   begin
+   if(read_enable)
+   begin
+   RxDone <=1'b0;
+   counter<= counter+1;
+   
+   if ((counter == 4'b1000) & (start_bit))
+   begin
+   start_bit <=1'b0;
+   counter <=4'b0000;
+   end
+   
+   if ((counter == 4'b1111) & (!start_bit) & (Bit < NBits))
+   begin
+   Bit <=Bit +1;
+   Read_data <= (Rx,Read_data[7:1]);
+   counter <= 4'b0000;
+   end
+   
+   if((counter == 4'b1111) & (Bit ==NBits) & (Rx))
+   begin
+   Bit <= 4'b0000;
+   RxDone <=1'b1;
+   counter <=4'b0000;
+   start_bit <=1'b1;
+   end
+   end
+end   
+   
+//Assigning output
+
+always @ (posedge Clk)
+begin
+
+if (NBits == 4'b1000)
+begin
+RxData[7:0] <= Read_data[7:0];
+end
+
+if (NBits == 4'b0111)
+begin
+RxData[7:0]<=(1'b0,Read_data[7:1]);
+end
+
+if (NBits == 4'b0110)
+begin
+RxData[7:0]<=(1'b0,1'b0,Read_data[7:2]);
+end
+
+endmodule
