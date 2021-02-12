@@ -33,6 +33,9 @@ Take home coding test.
 2. The Server API defines two functions `write(unsigned address,unsigned data);` and `unsigned read(unsigned address);` which will be used to access different address spaces in the I2C peripheral.
 3. Use any FPGA that you are comfortable with to build and test this system.
 
+Note: 
+1. Buiding the IP's from scratch will take a very long time, Explore the IP library of your FPGA Vendor and instantiate the required IP's in your design.
+2. Ensure that your code has zero simulation/synthesis warnings/errors before generating the pull request.
 
 # Instructions:
 
